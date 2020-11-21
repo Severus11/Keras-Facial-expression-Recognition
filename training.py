@@ -1,6 +1,6 @@
 import numpy as np
 import seaborn as sns
-import utils 
+#import utils 
 import os
 
 import tensorflow as tf
@@ -13,7 +13,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau
 from tensorflow.keras.utils import plot_model
 
 from IPython.display import SVG, Image
-from livelossplot.tf_keras import PlotLossesCallback
+#from livelossplot.tf_keras import PlotLossesCallback
 
 img_size=48
 batch_size=64
@@ -24,28 +24,28 @@ test_generator = datagen_train.flow_from_directory("Test_img/", target_size=(img
 
 model= Sequential()
 
-model.add(Conv2D(64, (3,3), padding='same', input_size=(48,48,1)))
+model.add(Conv2D(64, (3,3), padding='same', input_shape=(48,48,1)))
 model.add(BatchNormalization())
-model.add(Activation='relu')
+model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
 
 model.add(Conv2D(128, (5,5), padding='same'))
 model.add(BatchNormalization())
-model.add(Activation='relu')
+model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
 
-model.add(Conv2D(256, (5,5), padding= 'same'))
+model.add(Conv2D(512, (5,5), padding= 'same'))
 model.add(BatchNormalization())
-model.add(Activation='relu')
+model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(.25))
 
 model.add(Conv2D(512, (3,3), padding='same'))
 
 model.add(BatchNormalization())
-model.add(Activation='relu')
+model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Dropout(0.25))
 
@@ -53,13 +53,13 @@ model.add(Flatten())
 
 model.add(Dense(256))
 model.add(BatchNormalization())
-model.add(Activation='relu')
-model.add(Dropout=0.25)
+model.add(Activation('relu'))
+model.add(Dropout(0.25))
 
 model.add(Dense(512))
 model.add(BatchNormalization())
-model.add(Activation= 'relu')
-model.add(Dropout=0.25)
+model.add(Activation('relu'))
+model.add(Dropout(0.25))
 
 model.add(Dense(7, activation='softmax'))
 
@@ -75,7 +75,12 @@ checkpoint = ModelCheckpoint('model_weights.h5', monitor=['val_accuracy'], save_
 
 #reduce the learning rate when the loss reaches a plateau condition
 reduce_lr= ReduceLROnPlateau(monitor='val_loss', factor = 0.1, patience=2, min_delta=0.00001, mode='auto')
-
-callbacks = [PlotLossesCallback(), checkpoint, reduce_lr]
-
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir="./logs")
+callbacks = [tensorboard_callback,checkpoint, reduce_lr]
+#tf.keras.callbacks.Callback()
 history = model.fit(x= train_generator, steps_per_epoch=steps, epochs= nb_epoch, validation_data=test_generator, validation_steps=test_steps, callbacks=callbacks)
+
+model_json = model.to_json()
+with open("model.json", "w") as json_file:
+    json_file.write(mdoel_json)
+    
