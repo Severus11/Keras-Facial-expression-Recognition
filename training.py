@@ -14,3 +14,10 @@ from tensorflow.keras.utils import plot_model
 
 from IPython.display import SVG, Image
 from livelossplot.tf_keras import PlotLossesCallback
+
+img_size=48
+batch_size=64
+datagen_train = ImageDataGenerator(horizontal_flip=True)
+train_generator = datagen_train.flow_from_directory("Training_img/", target_size=(img_size, img_size), color_mode= 'grayscale', batch_size= batch_size, class_mode ='categorical', shuffle = True)
+datagen_test = ImageDataGenerator(horizontal_flip=True)
+test_generator = datagen_train.flow_from_directory("Test_img/", target_size=(img_size, img_size), color_mode= 'grayscale', batch_size= batch_size, class_mode ='categorical', shuffle = True)
