@@ -2,17 +2,10 @@ import numpy as np
 import cv2
 import os
 
-os.mkdir("Angry")
-os.mkdir("Disgust")
-os.mkdir("Fear")
-os.mkdir("Happy")
-os.mkdir("Sad")
-os.mkdir("Surprise")
-os.mkdir("Ne")
-
-
-
-
+emotion_list= ['Angry', 'Disgust', 'Fear', 'Happy','Sad', 'Surprise','Neutral']
+for i in range(0,7):
+    x =emotion_list[i]
+    os.mkdir(x)
 
 
 with open('train.csv') as f:
@@ -32,8 +25,10 @@ for i in range(1,num_of_instances):
         pixels = np.array(pixels, 'float32')
         image = pixels.reshape(48, 48)
 
-        path_file_name = f"output/{i}_{emotion}.jpg"
+        x = int(emotion)
+        path_file_name = f"{emotion_list[x]}/{i}_{emotion}.jpg"
         cv2.imwrite(path_file_name, image)
 
     except Exception as ex:
         print(ex)
+
