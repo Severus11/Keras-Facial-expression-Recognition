@@ -66,7 +66,7 @@ model.add(Dense(7, activation='softmax'))
 opt = Adam(lr=0.005)
 model.compile(optimizer=opt, loss='categorical_crossentropy', metrics=['accuracy'])
 
-nb_epoch = 20
+nb_epoch = 80
 steps= train_generator.n/ train_generator.batch_size
 test_steps = test_generator.n/test_generator.batch_size
 
@@ -82,5 +82,5 @@ history = model.fit(x= train_generator, steps_per_epoch=steps, epochs= nb_epoch,
 
 model_json = model.to_json()
 with open("model.json", "w") as json_file:
-    json_file.write(mdoel_json)
+    json_file.write(model_json)
     
