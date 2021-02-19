@@ -2,11 +2,19 @@
 <html>
     <title>Facial Recognition System </title>
     <head>
-        <link rel ='stylesheet' href = 'CSS\style.css'>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+        <link rel ='stylesheet' href = 'style.css'>
+        
 
     </head>
+
+    <h2>
+        Welcome to Facial Expression Recognition
+    </h2>
+    <p class ="p1">powered by <span style="color: white; font-family: sans-serif;">Keras</span></p>    
+
     <body>
         <img id ='bg' width=800px height=640px src = "{{url_for('video_feed')}}">
-        
     </body>
 </html>
